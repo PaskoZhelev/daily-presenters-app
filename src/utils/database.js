@@ -6,10 +6,10 @@ let isConnected;
 
 const connectToDatabase = () => {
     if (isConnected) {
-      console.log('=> using existing database connection');
+      console.log('Using Existing database connection');
       return Promise.resolve();
     }
-    console.log('=> using new database connection');
+    console.log('Established database connection');
     return mongoose.connect(process.env.MONGO_URL).then(db => {
       isConnected = db.connections[0].readyState;
     });

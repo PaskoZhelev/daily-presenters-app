@@ -1,8 +1,28 @@
 const connectToDatabase = require('../src/utils/database');
+const PersonModel = require('../src/models/Person');
+const ProjectModel = require('../src/models/Project');
 
 exports.handler = async (event) => {
     connectToDatabase().then(() => {
-        console.log("Connected to the database");
+        ProjectModel.find({ name: 'CE-Phoenix'}, function (err, project) {
+            if (err){
+                console.log(err);
+            }
+            else{
+                console.log("Success : ", project);
+            }
+        });
+
+        // PersonModel.create({
+        //     name: 'Pasko Zhelev',
+        //     project: 'CE-Phoenix',
+        //   }, (err) => {
+        //     if (err) {
+        //       console.err('Error occurred while adding person to the db');
+        //       console.err(err.message);
+        //     }
+        //   });
+
         })
         .catch((err) => {
           console.log('Error occurred while connecting to the database', err);
