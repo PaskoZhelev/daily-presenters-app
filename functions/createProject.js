@@ -11,8 +11,8 @@ exports.handler = async (event, context, callback) => {
       );
 
     const projectName = event.queryStringParameters.projectName
-        
-    await ProjectModel.exists({ name: projectName})
+
+    await ProjectModel.create({ name: projectName})
     .then(projectExists => 
         callback(null, {
             statusCode: 200,
