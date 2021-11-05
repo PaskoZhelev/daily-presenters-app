@@ -1,4 +1,3 @@
-import './App.css';
 import MainPage from "./components/mainPage.js"
 import { Route, Switch } from 'react-router-dom';
 import PresentersPage from './components/presentersPage';

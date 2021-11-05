@@ -4,9 +4,9 @@ import '../App.css';
 export default function PresentersPage() {
     return (
       <div>
-        <h1><span class="blue"></span>Daily<span class="blue"></span> <span class="yellow">Presenters</span></h1>
+        <h1><span className="blue"></span>Daily<span className="blue"></span> <span className="yellow">Presenters</span></h1>
         <h2>Project: <strong>CE-Phoenix</strong></h2>
-        <table class="container">
+        <table className="container">
             <thead>
                 <tr>
                     <th><h1>Date</h1></th>
@@ -15,8 +15,8 @@ export default function PresentersPage() {
             </thead>
             <tbody>
                 <tr id="selectedRow">
-                    <td id="selectedCellDate">05 Nov 21</td>
-                    <td id="selectedCellName">Pasko Zhelev</td>
+                    <td id="selectedCellName">05 Nov 21</td>
+                    <td id="selectedCellDate">Pasko Zhelev</td>
                 </tr>
                 <tr>
                     <td>06 Nov 21</td>
