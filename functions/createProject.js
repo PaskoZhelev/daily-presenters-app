@@ -12,7 +12,7 @@ exports.handler = async (event, context, callback) => {
 
     const projectName = event.queryStringParameters.projectName
 
-    await ProjectModel.create({ name: projectName})
+    await ProjectModel.create({ name: projectName.toUpperCase()})
     .then(project => 
         callback(null, {
             statusCode: 200,

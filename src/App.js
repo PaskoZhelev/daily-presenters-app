@@ -7,7 +7,7 @@ function App() {
       <main>
         <Switch>
         <Route path="/" component={MainPage} exact />
-        <Route path="/project" component={PresentersPage} />
+        <Route path="/project/:projectName" component={PresentersPage} />
         <Route component={Error} />
         </Switch>
       </main>
