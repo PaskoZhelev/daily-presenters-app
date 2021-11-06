@@ -8,11 +8,10 @@ export default function PresentersPage() {
     const [presenters, setPresenters] = useState([])
     const [loading, setLoading] = useState(true)
     const [validProject, setValidProject] = useState(false)
-    const [error, setError] = useState(false)
 
     const { projectName } = useParams();
 
-    let fetchPresenters = async () => {
+    const fetchPresenters = async () => {
         // check is hardcoded for now to limit function calls
         const isValid = existingProjects.includes(projectName.toUpperCase())
 
@@ -89,7 +88,7 @@ export default function PresentersPage() {
                             <ul id="menu">
                                 <li><Link to="/" >Home</Link></li>
                                 <li><Link to={`/people/${projectName}`} >Add Team Members</Link></li>
-                                <li><a onClick={addPresenters}>Generate Presenters</a></li>
+                                <li><Link to={`/project/${projectName}`} onClick={addPresenters} >Generate Presenters</Link></li>
                             </ul>
                         </nav>
                     </div>
@@ -126,7 +125,7 @@ export default function PresentersPage() {
                             <ul id="menu">
                                 <li><Link to="/" >Home</Link></li>
                                 <li><Link to={`/people/${projectName}`} >Add Team Members</Link></li>
-                                <li><a onClick={addPresenters}>Generate Presenters</a></li>
+                                <li><Link to={`/project/${projectName}`} onClick={addPresenters} >Generate Presenters</Link></li>
                             </ul>
                         </nav>
                     </div>

@@ -4,7 +4,6 @@ import { Loader, existingProjects } from '../utils/projectUtils';
 import '../App.css';
 import { FaDiceD20 } from 'react-icons/fa';
 import { IconContext } from "react-icons";
-import { useHistory } from 'react-router';
 
 export default function PeoplePage() {
     const [people, setPeople] = useState([])
@@ -13,8 +12,6 @@ export default function PeoplePage() {
     const [textFieldValue, setTextFieldValue] = useState('');
 
     const { projectName } = useParams();
-
-    const history = useHistory();
 
     const _handleTextFieldChange = (e) => {
         setTextFieldValue(e.target.value);
@@ -36,12 +33,12 @@ export default function PeoplePage() {
     }
 
     const addPerson = async (e) => {
-        let personRes = await fetch(`/api/createPerson?projectName=${projectName.toUpperCase()}&personName=${textFieldValue}`)
+        await fetch(`/api/createPerson?projectName=${projectName.toUpperCase()}&personName=${textFieldValue}`)
         setTextFieldValue('')
     }
 
     const removePerson = async (personName) => {
-      let personRes = await fetch(`/api/removePerson?projectName=${projectName.toUpperCase()}&personName=${personName}`)
+      await fetch(`/api/removePerson?projectName=${projectName.toUpperCase()}&personName=${personName}`)
       let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
       let data = await peopleRes.json()
       setPeople(data)
