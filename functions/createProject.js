@@ -11,8 +11,8 @@ exports.handler = async (event, context, callback) => {
       );
 
     const projectName = event.queryStringParameters.projectName
-
-    await ProjectModel.create({ name: projectName.toUpperCase()})
+    const today = new Date()    
+    await ProjectModel.create({ name: projectName.toUpperCase(), lastGeneratedDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1)})
     .then(project => 
         callback(null, {
             statusCode: 200,

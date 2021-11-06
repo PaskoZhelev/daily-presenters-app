@@ -11,19 +11,20 @@ exports.handler = async (event, context, callback) => {
       );
 
     const projectName = event.queryStringParameters.projectName
-        
-    await ProjectModel.findOne({ name: projectName})
-    .then(projectExists => 
+    const date = event.queryStringParameters.date
+
+    await ProjectModel.updateOne({ name: projectName.toUpperCase(), lastGeneratedDate: date})
+    .then(project => 
         callback(null, {
             statusCode: 200,
-            body: JSON.stringify(projectExists)
+            body: JSON.stringify(project)
         })
       )
       .catch(err =>
         callback(null, {
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
-          body: 'An Internal Error ocurred'
+          body: 'An Error ocurred when creating a project'
         })
       );
 }

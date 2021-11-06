@@ -12,7 +12,7 @@ exports.handler = async (event, context, callback) => {
 
     const projectName = event.queryStringParameters.projectName
         
-    await ProjectModel.findOne({ name: projectName})
+    await ProjectModel.exists({ name: projectName})
     .then(projectExists => 
         callback(null, {
             statusCode: 200,

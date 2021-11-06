@@ -13,7 +13,7 @@ exports.handler = async (event, context, callback) => {
     const currDate = event.queryStringParameters.date  
     const projectName = event.queryStringParameters.projectName
 
-    await PresenterModel.find({ project: projectName, date: {$gte: currDate}}).sort({ date: 1})
+    await PresenterModel.find({ project: projectName, date: {$gte: currDate}}).sort({ date: 1}).limit(35)
     .then(presenter => 
         callback(null, {
             statusCode: 200,

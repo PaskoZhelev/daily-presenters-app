@@ -24,6 +24,16 @@ export function getCurrentDate(separator='-'){
     return `${year}${separator}${month + 1}${separator}${date}`
 }
 
+
+export function formatReverseDate(date, separator=' '){
+    let providedDate = new Date(date)
+    let day = providedDate.getDate();
+    let month =providedDate.getMonth();
+    let year = providedDate.getFullYear();
+    
+    return `${year}${separator}${month + 1}${separator}${day}`
+}
+
 export function formatDate(date, separator=' '){
     let providedDate = new Date(date)
     let day = providedDate.getDate();

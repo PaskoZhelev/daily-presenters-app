@@ -1,6 +1,7 @@
 import MainPage from "./components/mainPage.js"
 import { Route, Switch } from 'react-router-dom';
 import PresentersPage from './components/presentersPage';
+import PeoplePage from "./components/peoplePage.js";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         <Switch>
         <Route path="/" component={MainPage} exact />
         <Route path="/project/:projectName" component={PresentersPage} />
+        <Route path="/people/:projectName" component={PeoplePage} />
         <Route component={Error} />
         </Switch>
       </main>
@@ -17,9 +19,9 @@ function App() {
 const Error = () => (
   <div className="App">
         <header className="App-header">
-          <p>
-            Oops! Page not found!
-          </p>
+          <h2>
+            <strong>Oops! Page not found!</strong>
+          </h2>
         </header>
       </div>
 )
