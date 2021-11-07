@@ -162,7 +162,7 @@ h2 a {
   margin-left: -200px;
 }
 
-.grid-2 {
+.custom-grid {
   inline-size: 100%;
   margin-inline: auto;
   max-inline-size: 25rem;

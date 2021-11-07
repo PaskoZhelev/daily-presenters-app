@@ -65,7 +65,7 @@ export default function PeoplePage() {
                             </ul>
                         </nav>
                   </div>
-                  <div class="grid-2">
+                  <div class="custom-grid">
                   <form onSubmit={addPerson} class="form login">
                       <div class="form__field">
                         <label htmlFor="login__username">
@@ -97,7 +97,7 @@ export default function PeoplePage() {
                     </table>
                 </div> :
                 <div>
-                  <div class="grid-2">
+                  <div class="custom-grid">
                   <form onSubmit={addPerson} class="form login">
                       <div class="form__field">
                         <label htmlFor="login__username">
