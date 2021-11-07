@@ -3,7 +3,7 @@ const PresenterModel = require('../src/models/Presenter');
 
 exports.handler = async (event, context, callback) => {
     const conn = await connectToDatabase().catch(err =>
-        callback(null, {
+        context.done(null, {
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
           body: 'Error ocurred when connecting to the database'
@@ -15,13 +15,13 @@ exports.handler = async (event, context, callback) => {
 
     await PresenterModel.deleteMany({ date: {$lt: currDate}, projectName: projectName})
     .then(presenter => 
-        callback(null, {
+        context.done(null, {
             statusCode: 200,
             body: JSON.stringify(presenter)
         })
       )
       .catch(err =>
-        callback(null, {
+        context.done(null, {
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
           body: 'An Error ocurred when creating a person'
