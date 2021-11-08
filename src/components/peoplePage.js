@@ -23,7 +23,7 @@ export default function PeoplePage() {
 
         if(isValid) {
             // fetch projects
-            let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
+            let peopleRes = await fetch(`/.netlify/functions/findPeople?projectName=${projectName.toUpperCase()}`)
             let data = await peopleRes.json()
             setPeople(data)
         }
@@ -33,13 +33,13 @@ export default function PeoplePage() {
     }
 
     const addPerson = async (e) => {
-        await fetch(`/api/createPerson?projectName=${projectName.toUpperCase()}&personName=${textFieldValue}`)
+        await fetch(`/.netlify/functions/createPerson?projectName=${projectName.toUpperCase()}&personName=${textFieldValue}`)
         setTextFieldValue('')
     }
 
     const removePerson = async (personName) => {
-      await fetch(`/api/removePerson?projectName=${projectName.toUpperCase()}&personName=${personName}`)
-      let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
+      await fetch(`/.netlify/functions/removePerson?projectName=${projectName.toUpperCase()}&personName=${personName}`)
+      let peopleRes = await fetch(`/.netlify/functions/findPeople?projectName=${projectName.toUpperCase()}`)
       let data = await peopleRes.json()
       setPeople(data)
   }
