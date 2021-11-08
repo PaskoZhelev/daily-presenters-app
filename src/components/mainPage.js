@@ -30,7 +30,7 @@ export default function MainPage() {
                     </IconContext.Provider>
                     <span class="hidden">Project Name</span>
                 </label>
-                <input autocomplete="username" onChange={_handleTextFieldChange} id="login__username" type="text" name="username" class="form__input" placeholder="Project Name" required />
+                <input onChange={_handleTextFieldChange} id="login__username" type="text" autoFocus class="form__input" placeholder="Project Name" required />
               </div>
               <div class="form__field">
                 <input type="submit" value="Find Project" />

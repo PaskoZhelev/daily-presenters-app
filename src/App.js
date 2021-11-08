@@ -15,14 +15,4 @@ function App() {
   );
 }
 
-const Error = () => (
-  <div className="App">
-        <header className="App-header">
-          <h2>
-            <strong>Oops! Page not found!</strong>
-          </h2>
-        </header>
-      </div>
-)
-
 export default App;
