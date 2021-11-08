@@ -12,8 +12,9 @@ exports.handler = async (event, context, callback) => {
 
     const currDate = event.queryStringParameters.date  
     const projectName = event.queryStringParameters.projectName
+    const convertedDate = Date.UTC(currDate.getFullYear(), currDate.getMonth(), currDate.getDate())
 
-    await PresenterModel.find({ project: projectName, date: {$gte: currDate}}).sort({ date: 1}).limit(35)
+    await PresenterModel.find({ project: projectName, date: {$gte: convertedDate}}).sort({ date: 1}).limit(35)
     .then(presenter => 
         context.done(null, {
             statusCode: 200,
