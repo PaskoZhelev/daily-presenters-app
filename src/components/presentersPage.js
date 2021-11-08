@@ -17,7 +17,7 @@ export default function PresentersPage() {
 
         if(isValid) {
             // fetch projects
-            let presentersRes = await fetch(`/.netlify/functions/findPresenters?projectName=${projectName.toUpperCase()}&date=${getCurrentDate()}`)
+            let presentersRes = await fetch(`/api/findPresenters?projectName=${projectName.toUpperCase()}&date=${getCurrentDate()}`)
             let data = await presentersRes.json()
             setPresenters(data)
         }
@@ -38,7 +38,7 @@ export default function PresentersPage() {
 
     /* add new presenters */
     const addPresenters = async () => {
-        let projectRes = await fetch(`/.netlify/functions/findProject?projectName=${projectName.toUpperCase()}`)
+        let projectRes = await fetch(`/api/findProject?projectName=${projectName.toUpperCase()}`)
         let project = await projectRes.json()
         let today = new Date()
         let lastGeneratedDate = new Date(project.lastGeneratedDate)
@@ -55,18 +55,18 @@ export default function PresentersPage() {
             currentDate = new Date(lastGeneratedDate.getFullYear(), lastGeneratedDate.getMonth(), lastGeneratedDate.getDate())
         }
 
-        let peopleRes = await fetch(`/.netlify/functions/findPeople?projectName=${projectName.toUpperCase()}`)
+        let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
         let peopleList = await peopleRes.json()
 
         for (let i = 0; i < generationCycles; i++) {
             for (let j = 0; j < peopleList.length; j++) {
                 currentDate = findNextPossibleDate(currentDate);
-                await fetch(`/.netlify/functions/createPresenter?projectName=${projectName.toUpperCase()}&personName=${peopleList[j].name}&date=${formatReverseDate(currentDate)}`)
+                await fetch(`/api/createPresenter?projectName=${projectName.toUpperCase()}&personName=${peopleList[j].name}&date=${formatReverseDate(currentDate)}`)
             } 
         }
 
-        await fetch(`/.netlify/functions/removePresenters?projectName=${projectName.toUpperCase()}&date=${formatReverseDate(new Date())}`)
-        await fetch(`/.netlify/functions/updateProject?projectName=${projectName.toUpperCase()}&date=${formatReverseDate(currentDate)}`)
+        await fetch(`/api/removePresenters?projectName=${projectName.toUpperCase()}&date=${formatReverseDate(new Date())}`)
+        await fetch(`/api/updateProject?projectName=${projectName.toUpperCase()}&date=${formatReverseDate(currentDate)}`)
         fetchPresenters()
     }
 
