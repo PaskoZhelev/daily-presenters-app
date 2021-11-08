@@ -38,6 +38,7 @@ export default function PresentersPage() {
 
     /* add new presenters */
     const addPresenters = async () => {
+        setLoading(true)
         let projectRes = await fetch(`/api/findProject?projectName=${projectName.toUpperCase()}`)
         let project = await projectRes.json()
         let today = new Date()
