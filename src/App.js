@@ -10,7 +10,6 @@ function App() {
         <Route path="/" component={MainPage} exact />
         <Route path="/project/:projectName" component={PresentersPage} />
         <Route path="/people/:projectName" component={PeoplePage} />
-        <Route component={Error} />
         </Switch>
       </main>
   );
