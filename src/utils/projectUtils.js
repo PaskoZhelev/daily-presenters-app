@@ -17,7 +17,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 export function getCurrentDate(separator='-'){
 
     let newDate = new Date()
-    let date = newDate.getDate();
+    let date = newDate.getDate() - 1;
     let month = newDate.getMonth();
     let year = newDate.getFullYear();
     

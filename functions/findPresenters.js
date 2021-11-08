@@ -9,13 +9,11 @@ exports.handler = async (event, context, callback) => {
           body: 'Error ocurred when connecting to the database'
         })
       );
-
+        
     const currDate = event.queryStringParameters.date  
     const projectName = event.queryStringParameters.projectName
-    const currDateConverted = new Date(currDate)
-    const convertedDate = Date.UTC(currDateConverted.getFullYear(), currDateConverted.getMonth(), currDateConverted.getDate())
 
-    await PresenterModel.find({ project: projectName, date: {$gte: convertedDate}}).sort({ date: 1}).limit(35)
+    await PresenterModel.find({ project: projectName, date: {$gte: currDate}}).sort({ date: 1}).limit(35)
     .then(presenter => 
         context.done(null, {
             statusCode: 200,
