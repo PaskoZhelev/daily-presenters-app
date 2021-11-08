@@ -8,7 +8,7 @@ export const Loader = () => (
     </div>
 ); 
 
-export const existingProjects = ["CE-PHOENIX"];
+export const existingProjects = ["CE-PHOENIX", "PASKO-TEST"];
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"

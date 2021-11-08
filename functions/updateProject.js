@@ -13,7 +13,10 @@ exports.handler = async (event, context, callback) => {
     const projectName = event.queryStringParameters.projectName
     const date = event.queryStringParameters.date
 
-    await ProjectModel.updateOne({ name: projectName.toUpperCase(), lastGeneratedDate: date})
+    const filter = { name: projectName.toUpperCase() };
+    const update = { lastGeneratedDate: date };    
+
+    await ProjectModel.findOneAndUpdate(filter, update)
     .then(project => 
         context.done(null, {
             statusCode: 200,
@@ -24,7 +27,7 @@ exports.handler = async (event, context, callback) => {
         context.done(null, {
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
-          body: 'An Error ocurred when creating a project'
+          body: err
         })
       );
 }

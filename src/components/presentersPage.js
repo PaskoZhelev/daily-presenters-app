@@ -4,7 +4,7 @@ import { Loader, existingProjects, getCurrentDate, formatDate, formatReverseDate
 import '../App.css';
 
 export default function PresentersPage() {
-    const generationCycles = 3;
+    const generationCycles = 1;
     const [presenters, setPresenters] = useState([])
     const [loading, setLoading] = useState(true)
     const [validProject, setValidProject] = useState(false)
