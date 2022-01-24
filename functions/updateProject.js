@@ -12,9 +12,21 @@ exports.handler = async (event, context, callback) => {
 
     const projectName = event.queryStringParameters.projectName
     const date = event.queryStringParameters.date
-
+    let currentPresenterIndex = event.queryStringParameters.currentPresenterIndex
+    const peopleCount = event.queryStringParameters.peopleCount
     const filter = { name: projectName.toUpperCase() };
-    const update = { lastGeneratedDate: date };    
+    let update;  
+
+    if(date !== undefined) {
+      update = { lastGeneratedDate: date };  
+    } else if(currentPresenterIndex !== undefined && peopleCount !== undefined) {
+      currentPresenterIndex++;
+      if(currentPresenterIndex >= peopleCount) {
+        currentPresenterIndex = 0;
+      }
+
+      update = { indexOfNextPresenter: currentPresenterIndex };  
+    }
 
     await ProjectModel.findOneAndUpdate(filter, update)
     .then(project => 

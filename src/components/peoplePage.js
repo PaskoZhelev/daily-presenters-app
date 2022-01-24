@@ -17,12 +17,12 @@ export default function PeoplePage() {
         setTextFieldValue(e.target.value);
     };
 
-    let fetchPeople = async (projectName) => {
+    let fetchPeople = async () => {
         // check is hardcoded for now to limit function calls
         const isValid = existingProjects.includes(projectName.toUpperCase())
 
         if(isValid) {
-            // fetch projects
+            // fetch people
             let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
             let data = await peopleRes.json()
             setPeople(data)
@@ -45,8 +45,8 @@ export default function PeoplePage() {
   }
 
     useEffect(() => {
-        fetchPeople(projectName)
-      }, [projectName]);
+        fetchPeople()
+      }, []);
 
     return (
       <div>

@@ -4,12 +4,67 @@ import { Loader, existingProjects, getCurrentDate, formatDate, formatReverseDate
 import '../App.css';
 
 export default function PresentersPage() {
-    const generationCycles = 1;
+    const generationCycles = 2;
     const [presenters, setPresenters] = useState([])
+    const [people, setPeople] = useState([])
+    const [project, setProject] = useState([])
     const [loading, setLoading] = useState(true)
     const [validProject, setValidProject] = useState(false)
 
     const { projectName } = useParams();
+
+    // generate list of presenters based on indexOfNextPresenter
+    // which is updated nightly using mongodb scheduled trigger
+    const generatePresenters = async () => {
+        // check is hardcoded for now to limit function calls
+        const isValid = existingProjects.includes(projectName.toUpperCase())
+
+        if(isValid) {
+            // fetch people
+            let peopleRes = await fetch(`/api/findPeople?projectName=${projectName.toUpperCase()}`)
+            let peopleData = await peopleRes.json()
+            setPeople(peopleData)
+
+            // in case there are no people
+            if(peopleData.length === 0) {
+                setLoading(false);
+                setValidProject(isValid);
+                return;
+            }
+
+            // fetch project
+            let project = await fetch(`/api/findProject?projectName=${projectName.toUpperCase()}`)
+            let projectData = await project.json()
+            setProject(projectData);
+            
+            // start from the previous date
+            let now = new Date();
+            let currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+            let presentersList = [];
+
+            // ensure valid index
+            let indexOfNextPresenter = projectData.indexOfNextPresenter === undefined || projectData.indexOfNextPresenter >= peopleData.length ? 0 : projectData.indexOfNextPresenter;
+
+            // first cycle
+            for(let j = indexOfNextPresenter; j < peopleData.length; j++) {
+                currentDate = findNextPossibleDate(currentDate);
+                presentersList.push({person: peopleData[j].name, date: currentDate});
+            }
+
+            // generate rest of the cycles
+            for (let i = 0; i < generationCycles; i++) {
+                for (let j = 0; j < peopleData.length; j++) {
+                    currentDate = findNextPossibleDate(currentDate);
+                    presentersList.push({person: peopleData[j].name, date: currentDate});
+                } 
+            }
+
+            setPresenters(presentersList);
+        }
+
+        setLoading(false);
+        setValidProject(isValid)
+    }
 
     const fetchPresenters = async () => {
         // check is hardcoded for now to limit function calls
@@ -34,6 +89,12 @@ export default function PresentersPage() {
         }
 
         return currentDate
+    }
+
+    const skipPresenter = async () => {
+        setLoading(true);
+        await fetch(`/api/updateProject?projectName=${projectName.toUpperCase()}&currentPresenterIndex=${project.indexOfNextPresenter}&peopleCount=${people.length}`);
+        generatePresenters();
     }
 
     /* add new presenters */
@@ -72,7 +133,7 @@ export default function PresentersPage() {
     }
 
     useEffect(() => {
-        fetchPresenters()
+        generatePresenters()
       }, []);
 
     return (
@@ -89,7 +150,7 @@ export default function PresentersPage() {
                             <ul id="menu">
                                 <li><Link to="/" >Home</Link></li>
                                 <li><Link to={`/people/${projectName}`} >Add Team Members</Link></li>
-                                <li><Link to={`/project/${projectName}`} onClick={addPresenters} >Generate Presenters</Link></li>
+                                <li><Link to={`/project/${projectName}`} onClick={skipPresenter} >Skip Presenter</Link></li>
                             </ul>
                         </nav>
                     </div>
@@ -126,7 +187,7 @@ export default function PresentersPage() {
                             <ul id="menu">
                                 <li><Link to="/" >Home</Link></li>
                                 <li><Link to={`/people/${projectName}`} >Add Team Members</Link></li>
-                                <li><Link to={`/project/${projectName}`} onClick={addPresenters} >Generate Presenters</Link></li>
+                                <li><Link to={`/project/${projectName}`} onClick={skipPresenter} >Skip Presenter</Link></li>
                             </ul>
                         </nav>
                     </div>
